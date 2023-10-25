@@ -52,3 +52,6 @@ for epoch in range(num_epochs):
     optimizer.step()
 
     print(f'Epoch [{epoch + 1}/{num_epochs}] Loss: {loss.item()}')
+
+# Save
+torch.save(model.state_dict(), 'baseline_mlp_model.pth')

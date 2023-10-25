@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77a63281-9d6f-4f03-8ded-ae70942d8253" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CNN.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baseline_mlp_model.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/initial_cnn_model.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Initial_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Initial_CNN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/baseline.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
