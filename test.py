@@ -7,7 +7,7 @@ from torch.autograd import Variable
 from PIL import Image
 import os
 
-# Define CNN model
+# ReDefine CNN model
 class CNNModel(nn.Module):
     def __init__(self, num_classes):
         super(CNNModel, self).__init__()
@@ -16,7 +16,7 @@ class CNNModel(nn.Module):
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.fc1 = nn.Linear(64 * 37 * 37, 128)
         self.fc2 = nn.Linear(128, num_classes)
-        self.dropout = nn.Dropout(0.5)
+        self.dropout = nn.Dropout(0.5)  # Added dropout layer
 
     def forward(self, x):
         x = self.pool(torch.relu(self.conv1(x)))
@@ -26,6 +26,13 @@ class CNNModel(nn.Module):
         x = self.dropout(x)  # Applied dropout
         x = self.fc2(x)
         return x
+
+# Class Mapping
+index_to_class = {
+    0: "Cherry",
+    1: "Strawberry",
+    2: "Tomato",
+}
 
 # Define testing function
 def test_model():
@@ -46,7 +53,9 @@ def test_model():
 
     # Create a custom dataset for the test data
     test_image_paths = [os.path.join(test_dataset_root, image_name) for image_name in os.listdir(test_dataset_root)]
-    predictions = []
+
+    total_images = len(test_image_paths)
+    class_counts = {class_name: 0 for class_name in index_to_class.values()}
 
     for image_path in test_image_paths:
         image = Image.open(image_path)
@@ -54,14 +63,17 @@ def test_model():
         image = Variable(image.unsqueeze(0))  # Add batch dimension
         outputs = model(image)
         _, predicted = torch.max(outputs.data, 1)
-        predictions.append(predicted.item())
+        predicted_class = index_to_class[predicted.item()]
 
-    # Print the predictions
-    for i, prediction in enumerate(predictions, 1):
-        print(f"Image {i}: Predicted class index - {prediction}")
+        class_counts[predicted_class] += 1
+
+    # Report performance statistics
+    print("Total number of images analyzed:", total_images)
+    for class_name, count in class_counts.items():
+        percentage = (count / total_images) * 100
+        print(f"Number of {class_name} images: {count} ({percentage:.2f}%)")
 
 if __name__ == '__main__':
     NUM_CLASSES = 3
     test_model()
-
 
