@@ -16,14 +16,12 @@ class CNNModel(nn.Module):
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.fc1 = nn.Linear(64 * 37 * 37, 128)
         self.fc2 = nn.Linear(128, num_classes)
-        self.dropout = nn.Dropout(0.5)  # Added dropout layer
 
     def forward(self, x):
         x = self.pool(torch.relu(self.conv1(x)))
         x = self.pool(torch.relu(self.conv2(x)))
         x = x.view(x.size(0), -1)
         x = torch.relu(self.fc1(x))
-        x = self.dropout(x)  # Applied dropout
         x = self.fc2(x)
         return x
 
@@ -37,7 +35,7 @@ index_to_class = {
 # Define testing function
 def test_model():
     # Load the saved model
-    model = CNNModel(num_classes=NUM_CLASSES)  # Make sure NUM_CLASSES is defined
+    model = CNNModel(num_classes=3)
     model.load_state_dict(torch.load("model.pth"))
     model.eval()  # Set the model to evaluation mode
 
@@ -74,6 +72,5 @@ def test_model():
         print(f"Number of {class_name} images: {count} ({percentage:.2f}%)")
 
 if __name__ == '__main__':
-    NUM_CLASSES = 3
     test_model()
 

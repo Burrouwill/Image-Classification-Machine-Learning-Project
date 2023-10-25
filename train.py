@@ -14,14 +14,12 @@ class CNNModel(nn.Module):
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.fc1 = nn.Linear(64 * 37 * 37, 128)
         self.fc2 = nn.Linear(128, num_classes)
-        self.dropout = nn.Dropout(0.5)  # Added dropout layer
 
     def forward(self, x):
         x = self.pool(torch.relu(self.conv1(x)))
         x = self.pool(torch.relu(self.conv2(x)))
         x = x.view(x.size(0), -1)
         x = torch.relu(self.fc1(x))
-        x = self.dropout(x)  # Applied dropout
         x = self.fc2(x)
         return x
 
@@ -35,10 +33,6 @@ def train_model():
     # Data preprocessing and loading
     data_transform = transforms.Compose([
         transforms.Resize((150, 150)),
-        transforms.RandomHorizontalFlip(),  # Data augmentation: horizontal flip
-        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Introduce color jitter
-        transforms.RandomRotation(15),  # Randomly rotate images
-        transforms.RandomResizedCrop(150, scale=(0.8, 1.0), ratio=(0.75, 1.333)),  # Random resized crop
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
